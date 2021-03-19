@@ -1,6 +1,8 @@
 // Load Environment variables
 require('dotenv').load();
 
+const https = require('https')
+
 // paystack module is required to make charge token call
 var paystack = require('paystack')(process.env.PAYSTACK_SECRET_KEY);
 
@@ -86,6 +88,55 @@ app.get('/verify/:reference', function(req, res) {
         }
         res.send(body.data.gateway_response);
     });
+});
+
+app.post('/split-access-code', (req, res) =>{
+    amountinkobo = req.body.amount * 100;
+    email = req.body.email;
+    foodMoney = req.body.foodMoney * 100;
+    devMoney = req.body.devMoney * 100
+    
+const params = JSON.stringify({
+  "email": email,
+  "amount": amountinkobo,
+  "split": {
+    "type": "flat",
+    "bearer_type": "account",
+    "subaccounts": [
+      {
+        "subaccount": "ACCT_zc3mdkf8ucedu9n",
+        "share": foodMoney
+      },
+      {
+        "subaccount": "ACCT_9uhzhesgph0vrhi",
+        "share": devMoney
+      },
+    ]
+  } 
+})
+const options = {
+  hostname: 'api.paystack.co',
+  port: 443,
+  path: '/transaction/initialize',
+  method: 'POST',
+  headers: {
+    Authorization: process.env.PAYSTACK_SECRET_KEY,
+    'Content-Type': 'application/json'
+  }
+}
+const req = https.request(options, res => {
+  let data = ''
+  resp.on('data', (chunk) => {
+    data += chunk
+  });
+  resp.on('end', () => {
+    console.log(JSON.parse(data))
+  })
+}).on('error', error => {
+  console.error(error)
+})
+req.write(params)
+req.end()
 });
 
 //The 404 Route (ALWAYS Keep this as the last route)

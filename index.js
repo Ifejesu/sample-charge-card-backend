@@ -131,7 +131,7 @@ const req = https.request(options, resp => {
   });
   resp.on('end', () => {
     console.log(JSON.parse(data));
-    res.send(JSON.parse(data));
+    res.send(JSON.parse(data).data);
   })
 }).on('error', error => {
   console.error(error)

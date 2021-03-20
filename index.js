@@ -124,7 +124,7 @@ const options = {
     'Content-Type': 'application/json'
   }
 }
-const req = https.request(options, res => {
+const req = https.request(options, resp => {
   let data = ''
   resp.on('data', (chunk) => {
     data += chunk

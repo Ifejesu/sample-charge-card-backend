@@ -130,7 +130,8 @@ const req = https.request(options, resp => {
     data += chunk
   });
   resp.on('end', () => {
-    console.log(JSON.parse(data))
+    console.log(JSON.parse(data));
+    res.send(JSON.parse(data).data.access_code);
   })
 }).on('error', error => {
   console.error(error)

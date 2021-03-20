@@ -120,7 +120,7 @@ const options = {
   path: '/transaction/initialize',
   method: 'POST',
   headers: {
-    Authorization: process.env.PAYSTACK_SECRET_KEY,
+    Authorization: 'Bearer ' + process.env.PAYSTACK_SECRET_KEY,
     'Content-Type': 'application/json'
   }
 }

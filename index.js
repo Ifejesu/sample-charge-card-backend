@@ -90,11 +90,11 @@ app.get('/verify/:reference', function(req, res) {
     });
 });
 
-app.post('/split-access-code', (req, res) =>{
-    amountinkobo = req.body.amount * 100;
-    email = req.body.email;
-    foodMoney = req.body.foodMoney * 100;
-    devMoney = req.body.devMoney * 100
+app.post('/split-access-code', (requ, res) =>{
+    amountinkobo = requ.body.amount * 100;
+    email = requ.body.email;
+    foodMoney = requ.body.foodMoney * 100;
+    devMoney = requ.body.devMoney * 100
     
 const params = JSON.stringify({
   "email": email,
